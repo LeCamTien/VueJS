@@ -7,11 +7,11 @@ use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
 /**
- * Class UserRepository.
+ * Class Department.
  *
  * @package namespace App\Entities;
  */
-class UserRepository extends Model implements Transformable
+class Department extends Model implements Transformable
 {
     use TransformableTrait;
 
@@ -20,6 +20,13 @@ class UserRepository extends Model implements Transformable
      *
      * @var array
      */
-    protected $fillable = [];
+    protected $table = 'departments';
+    protected $fillable = [
+        'id',
+        'name',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
 
 }
