@@ -13,7 +13,8 @@
     <link href="/resources/assets/templates/css/plugins/iCheck/custom.css" rel="stylesheet">
     <link href="/resources/assets/templates/css/animate.css" rel="stylesheet">
     <link href="/resources/assets/templates/css/style.css" rel="stylesheet">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    
 </head>
 
 <body>
