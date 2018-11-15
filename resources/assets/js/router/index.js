@@ -6,6 +6,9 @@ import Home from '../components/company/Home.vue'
 import Department from '../components/company/department/Index.vue'
 import DepartmentAdd from '../components/company/department/Add.vue'
 import DepartmentEdit from '../components/company/department/Edit.vue'
+import Role from '../components/company/role/Index.vue'
+import RoleAdd from '../components/company/role/Add.vue'
+import RoleEdit from '../components/company/role/Edit.vue'
 
 Vue.use(Router)
 
@@ -40,6 +43,21 @@ var routers = [
 		name: 'departmentEdit',
 		component: DepartmentEdit
 	},
+	{
+		path: '/role',
+		name: 'role',
+		component: Role
+	},
+	{
+		path: '/role-add',
+		name: 'roleAdd',
+		component: RoleAdd
+	},
+	{
+		path: '/role-edit/:id',
+		name: 'roleEdit',
+		component: RoleEdit
+	}
 	// {
 	// 	path: '*',
 	// 	redirect: '/login1'
@@ -56,6 +74,6 @@ router.beforeEach((to, from, next) => {
 	next();
 });
 
-router.push('/department');
+router.push('/');
 
 export default router;

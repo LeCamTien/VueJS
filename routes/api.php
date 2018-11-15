@@ -24,3 +24,11 @@ Route::group(['namespace' => 'Company', 'prefix' => 'departments'], function() {
 	Route::put('update/{id}', 'DepartmentController@update');
 	Route::delete('delete/{id}', 'DepartmentController@destroy');
 });
+
+Route::group(['namespace' => 'Company', 'prefix' => 'roles'], function() {
+	Route::get('index', 'RoleController@index');
+	Route::get('show/{id}', 'RoleController@show');
+	Route::post('store', 'RoleController@store');
+	Route::put('update/{id}', 'RoleController@update');
+	Route::delete('delete/{id}', 'RoleController@destroy');
+});

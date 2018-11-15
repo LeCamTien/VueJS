@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Company;
 
 use Illuminate\Http\Request;
 
@@ -17,7 +17,7 @@ use App\Validators\UserValidator;
  *
  * @package namespace App\Http\Controllers;
  */
-class UsersController extends Controller
+class UserController extends Controller
 {
     /**
      * @var UserRepository

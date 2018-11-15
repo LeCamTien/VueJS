@@ -10,6 +10,8 @@ use App\Repositories\UserRepository;
 use App\Repositories\UserRepositoryEloquent;
 use App\Repositories\DepartmentRepository;
 use App\Repositories\DepartmentRepositoryEloquent;
+use App\Repositories\RoleRepository;
+use App\Repositories\RoleRepositoryEloquent;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,5 +34,6 @@ class AppServiceProvider extends ServiceProvider
     {
         App::bind(UserRepository::class, UserRepositoryEloquent::class);
         App::bind(DepartmentRepository::class, DepartmentRepositoryEloquent::class);
+        App::bind(RoleRepository::class, RoleRepositoryEloquent::class);
     }
 }

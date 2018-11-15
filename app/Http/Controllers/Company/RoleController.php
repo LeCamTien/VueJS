@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Company;
 
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Http\Controllers\Controller;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\RoleCreateRequest;
@@ -17,7 +18,7 @@ use App\Validators\RoleValidator;
  *
  * @package namespace App\Http\Controllers;
  */
-class RolesController extends Controller
+class RoleController extends Controller
 {
     /**
      * @var RoleRepository
@@ -48,17 +49,17 @@ class RolesController extends Controller
      */
     public function index()
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $roles = $this->repository->all();
+        //$this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+        $roles = $this->repository->all(); 
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $roles,
+                'roles' => $roles,
             ]);
         }
 
-        return view('roles.index', compact('roles'));
+        //return view('roles.index', compact('roles'));
     }
 
     /**
@@ -70,11 +71,11 @@ class RolesController extends Controller
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function store(RoleCreateRequest $request)
+    public function store(Request $request)
     {
         try {
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
+            //$this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
             $role = $this->repository->create($request->all());
 
@@ -115,7 +116,7 @@ class RolesController extends Controller
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $role,
+                'role' => $role,
             ]);
         }
 
@@ -146,7 +147,7 @@ class RolesController extends Controller
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function update(RoleUpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
         try {
 

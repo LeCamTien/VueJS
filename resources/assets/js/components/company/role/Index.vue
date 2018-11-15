@@ -5,7 +5,7 @@
 	        <h2>Grid Options - based on Bootstrap Grid system overview</h2>
 	        <ol class="breadcrumb">
 	            <li>
-	                <router-link :to="{name:'role'}"><a href="" class="btn btn-warning"><i class="fa fa-plus"></i>Add new department</a></router-link>
+	                <router-link :to="{name:'roleAdd'}"><a href="" class="btn btn-warning"><i class="fa fa-plus"></i>Add new role</a></router-link>
 	            </li>
 	        </ol>
 	    </div>
@@ -18,7 +18,7 @@
 	        <div class="col-lg-12">
 	            <div class="ibox float-e-margins">
 	                <div class="ibox-title">
-	                    <h5>User</h5>
+	                    <h5>Role</h5>
 	                    <div class="ibox-tools">
 	                        <a class="collapse-link">
 	                            <i class="fa fa-chevron-up"></i>
@@ -51,14 +51,14 @@
 	                            </thead>
 	                            <tbody>
 	                                
-	                                <tr v-for="department, index in departments" >
-	                                    <th>{{ department.department_id }}</th>
-	                                    <td>{{ department.name }}</td>
-	                                    <td>{{ department.description }}</td>
-	                                    <td>{{ department.active }}</td>
+	                                <tr v-for="role, index in roles" >
+	                                    <th>{{ role.role_id }}</th>
+	                                    <td>{{ role.name }}</td>
+	                                    <td>{{ role.description }}</td>
+	                                    <td>{{ role.active }}</td>
 	                                    <td>
-	                                    	<router-link :to="{name:'departmentEdit', params: {id:department.department_id}}"><a href="" title="" class="btn btn-primary"><i class="fa fa-edit"></i> Sửa</a></router-link>
-                                            <a href="#" title="" v-on:click="deleteItem(department.department_id)" class="btn btn-danger"><i class="fa fa-pencil"></i> Xóa</a>
+	                                    	<router-link :to="{name:'roleEdit', params: {id: role.role_id}}"><a href="" title="" class="btn btn-primary"><i class="fa fa-edit"></i> Sửa</a></router-link>
+                                            <a href="#" title="" v-on:click="deleteItem(role.role_id)" class="btn btn-danger"><i class="fa fa-pencil"></i> Xóa</a>
 	                                    </td>
 	                                </tr>
 	                                
@@ -78,31 +78,32 @@
 	export default {
 		data: function () {
             return {
-                departments: []
+                roles: []
             }
         },
         mounted() {
             
-            axios.get('/api/departments/index')
+            axios.get('/api/roles/index')
                 .then(response => {
-                    this.departments = response.data.departments
+                    this.roles = response.data.roles
+                    console.log(this.roles)
                 })
                 .catch(error => {
                     console.log(error);
-                    alert("Could not load user");
+                    alert("Could not load role");
                 });
         },
         methods: {
-            deleteItem(department_id) {
+            deleteItem(role_id) {
                 if (confirm("Do you really want to delete it?")) {
                     
-                    axios.delete('/api/departments/delete/' + department_id)
+                    axios.delete('/api/roles/delete/' + role_id)
                         .then(response => {
-                            this.$router.replace('/department')
+                            this.$router.replace('/role')
                         })
                         .catch(error => {
                         	console.log(error);
-                            alert("Could not delete company");
+                            alert("Could not delete role");
                         });
                 }
             }

@@ -49,6 +49,6 @@ Route::group(['namespace' => 'Company', 'middleware' => 'auth'], function() {
 	]);
 });
 
-Route::get('/test', function() {
-	return bcrypt('123123');
-});
+Route::get('/test', [
+	'uses' => 'Company\RoleController@index'
+]);
