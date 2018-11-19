@@ -50,5 +50,5 @@ Route::group(['namespace' => 'Company', 'middleware' => 'auth'], function() {
 });
 
 Route::get('/test', [
-	'uses' => 'Company\RoleController@index'
+	'uses' => 'Company\UserController@index'
 ]);

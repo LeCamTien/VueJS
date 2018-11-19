@@ -32,3 +32,11 @@ Route::group(['namespace' => 'Company', 'prefix' => 'roles'], function() {
 	Route::put('update/{id}', 'RoleController@update');
 	Route::delete('delete/{id}', 'RoleController@destroy');
 });
+
+Route::group(['namespace' => 'Company', 'prefix' => 'users'], function() {
+	Route::get('index', 'UserController@index');
+	Route::get('show/{id}', 'UserController@show');
+	Route::post('store', 'UserController@store');
+	Route::put('update/{id}', 'UserController@update');
+	Route::delete('delete/{id}', 'UserController@destroy');
+});

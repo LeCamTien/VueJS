@@ -39,7 +39,6 @@
                     <div class="hr-line-dashed"></div>
                     <div class="form-group">
                         <div class="col-sm-4 col-sm-offset-2">
-                            <button class="btn btn-warning" type="reset">Reset</button>
                             <button class="btn btn-primary" type="submit">Edit</button>
                         </div>
                     </div>
@@ -81,7 +80,7 @@
                 event.preventDefault();
                 
                 var newRole = this.role;
-console.log(newRole);
+
                 axios.put('/api/roles/update/' + this.role_id, newRole)
                 .then(response => {
                     this.$router.replace('/role')

@@ -5,7 +5,7 @@
 	        <h2>Grid Options - based on Bootstrap Grid system overview</h2>
 	        <ol class="breadcrumb">
 	            <li>
-	                <router-link :to="{name:'role'}"><a href="" class="btn btn-warning"><i class="fa fa-plus"></i>Add new department</a></router-link>
+	                <router-link :to="{name:'departmentAdd'}"><a href="" class="btn btn-warning"><i class="fa fa-plus"></i>Add new department</a></router-link>
 	            </li>
 	        </ol>
 	    </div>
@@ -58,7 +58,7 @@
 	                                    <td>{{ department.active }}</td>
 	                                    <td>
 	                                    	<router-link :to="{name:'departmentEdit', params: {id:department.department_id}}"><a href="" title="" class="btn btn-primary"><i class="fa fa-edit"></i> Sửa</a></router-link>
-                                            <a href="#" title="" v-on:click="deleteItem(department.department_id)" class="btn btn-danger"><i class="fa fa-pencil"></i> Xóa</a>
+                                            <a href="#" title="" v-on:click="deleteItem(department.department_id, index)" class="btn btn-danger"><i class="fa fa-pencil"></i> Xóa</a>
 	                                    </td>
 	                                </tr>
 	                                
@@ -93,12 +93,12 @@
                 });
         },
         methods: {
-            deleteItem(department_id) {
+            deleteItem(department_id, index) {
                 if (confirm("Do you really want to delete it?")) {
                     
                     axios.delete('/api/departments/delete/' + department_id)
                         .then(response => {
-                            this.$router.replace('/department')
+                            this.departments.splice(index,1)
                         })
                         .catch(error => {
                         	console.log(error);

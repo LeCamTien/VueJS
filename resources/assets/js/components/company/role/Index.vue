@@ -58,7 +58,7 @@
 	                                    <td>{{ role.active }}</td>
 	                                    <td>
 	                                    	<router-link :to="{name:'roleEdit', params: {id: role.role_id}}"><a href="" title="" class="btn btn-primary"><i class="fa fa-edit"></i> Sửa</a></router-link>
-                                            <a href="#" title="" v-on:click="deleteItem(role.role_id)" class="btn btn-danger"><i class="fa fa-pencil"></i> Xóa</a>
+                                            <a href="#" title="" v-on:click="deleteItem(role.role_id, index)" class="btn btn-danger"><i class="fa fa-pencil"></i> Xóa</a>
 	                                    </td>
 	                                </tr>
 	                                
@@ -94,12 +94,12 @@
                 });
         },
         methods: {
-            deleteItem(role_id) {
+            deleteItem(role_id, index) {
                 if (confirm("Do you really want to delete it?")) {
                     
                     axios.delete('/api/roles/delete/' + role_id)
                         .then(response => {
-                            this.$router.replace('/role')
+                            this.roles.splice(index, 1)
                         })
                         .catch(error => {
                         	console.log(error);

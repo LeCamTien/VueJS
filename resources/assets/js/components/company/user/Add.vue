@@ -24,18 +24,20 @@
             </div>
             <div class="ibox-content">
                 <form method="post" v-on:submit="submitForm()" enctype="multipart/form-data" class="form-horizontal">
-                    <div class="form-group"><label class="col-sm-2 control-label">Role Name</label>
-                        <div class="col-sm-10"><input type="text" name="name" v-model="role.name" v-validate="'required'" class="form-control"></div>
+                    <div class="form-group"><label class="col-sm-2 control-label">Username</label>
+                        <div class="col-sm-10"><input type="text" v-model="user.username" class="form-control"></div>
                     </div>
-                    <h4 v-show="errors.has('role.name')">{{ errors.first('role.name') }}</h4>
+                    <div class="form-group"><label class="col-sm-2 control-label">Password</label>
+                        <div class="col-sm-10"><input type="password" v-model="user.password" class="form-control"></div>
+                    </div>
                     <div class="hr-line-dashed"></div>
-                    <div class="form-group"><label class="col-sm-2 control-label">Description</label>
-                        <div class="col-sm-10"><input type="text" v-model="role.description" class="form-control">
+                    <div class="form-group"><label class="col-sm-2 control-label">Email</label>
+                        <div class="col-sm-10"><input type="text" v-model="user.email" class="form-control">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
-                    <div class="form-group"><label class="col-sm-2 control-label">Active</label>
-                        <div class="col-sm-10"><input type="text" v-model="role.active" class="form-control" name="password"></div>
+                    <div class="form-group"><label class="col-sm-2 control-label">Role</label>
+                        <div class="col-sm-10"><input type="text" v-model="user.role_id" class="form-control" name="password"></div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group">
@@ -54,30 +56,31 @@
 <script>
 	export default {
 		data: function() {
-			return {
-				role: {
-					name: '',
-					description: '',
-					active: ''
-				}
-			}
-		},
-		methods: {
-			submitForm() {
-				event.preventDefault();
+            return {
+                user: {
+                    username: '',
+                    password: '',
+                    email: '',
+                    role_id: ''
+                }
+            }
+        },
+        methods: {
+            submitForm() {
+                event.preventDefault();
 
-				var newRole = this.role;
-console.log(newRole)
-				axios.post('/api/roles/store',  newRole)
-				.then(response => {
-					this.$router.replace('/role')
-				})
-				.catch(error => {
-					console.log(error);
-					alert("Could not create new role");
-				});
-			}
-		}
+                var newUser = this.user;
+console.log(newUser)
+                axios.post('/api/users/store', newUser)
+                .then(response => {
+                    this.$router.replace('/user')
+                })
+                .catch(error => {
+                    console.log(error)
+                    alert("Could not create new User!")
+                })
+            }
+        }
 	}
 </script>
 

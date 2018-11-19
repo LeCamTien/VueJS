@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Company;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Http\Controllers\Controller;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\UserCreateRequest;
@@ -49,12 +50,12 @@ class UserController extends Controller
     public function index()
     {
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $users = $this->repository->all();
+        $users = $this->repository->all(); 
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $users,
+                'users' => $users,
             ]);
         }
 
@@ -70,11 +71,11 @@ class UserController extends Controller
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function store(UserCreateRequest $request)
+    public function store(Request $request)
     {
         try {
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
+            //$this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
             $user = $this->repository->create($request->all());
 
@@ -115,7 +116,7 @@ class UserController extends Controller
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $user,
+                'user' => $user,
             ]);
         }
 
@@ -146,7 +147,7 @@ class UserController extends Controller
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function update(UserUpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
         try {
 

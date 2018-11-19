@@ -28,10 +28,10 @@
 		            <router-link :to="{name:'department'}"><a href=""><i class="fa fa-pie-chart"></i> <span class="nav-label">Department</span></a></router-link>
 		        </li>
 		        <li>
-		            <router-link :to="{name:'role'}"><a href=""><i class="fa fa-flask"></i> <span class="nav-label">Employee</span></a></router-link>
+		            <router-link :to="{name:'role'}"><a href=""><i class="fa fa-flask"></i> <span class="nav-label">Role</span></a></router-link>
 		        </li>
 		        <li>
-		            <router-link :to="{name:'role'}"><a href=""><i class="fa fa-magic"></i> <span class="nav-label">User </span><span class="label label-info pull-right">62</span></a></router-link>
+		            <router-link :to="{name:'user'}"><a href=""><i class="fa fa-magic"></i> <span class="nav-label">User </span><span class="label label-info pull-right">62</span></a></router-link>
 		        </li>
 		        <li>
 		            <router-link :to="{name:'role'}"><a href="package.html"><i class="fa fa-database"></i> <span class="nav-label">Package</span></a></router-link>

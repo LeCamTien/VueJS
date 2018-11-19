@@ -24,17 +24,17 @@
             </div>
             <div class="ibox-content">
                 <form method="POST" v-on:submit="submitForm()" class="form-horizontal">
-                    <div class="form-group"><label class="col-sm-2 control-label">Department Name</label>
-                        <div class="col-sm-10"><input type="text" v-model="department.name" class="form-control"></div>
+                    <div class="form-group"><label class="col-sm-2 control-label">Username</label>
+                        <div class="col-sm-10"><input type="text" v-model="user.username" class="form-control"></div>
                     </div>
                     <div class="hr-line-dashed"></div>
-                    <div class="form-group"><label class="col-sm-2 control-label">Description</label>
-                        <div class="col-sm-10"><input type="text" v-model="department.description" class="form-control">
+                    <div class="form-group"><label class="col-sm-2 control-label">Email</label>
+                        <div class="col-sm-10"><input type="text" v-model="user.email" class="form-control">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
-                    <div class="form-group"><label class="col-sm-2 control-label">Active</label>
-                        <div class="col-sm-10"><input type="text" v-model="department.active" class="form-control" name="password"></div>
+                    <div class="form-group"><label class="col-sm-2 control-label">Role</label>
+                        <div class="col-sm-10"><input type="text" v-model="user.role_id" class="form-control" name="password"></div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group">
@@ -50,51 +50,48 @@
 </template>
 
 <script>
-	export default {
+    export default {
         mounted() {
-            let app = this;
-            let id = app.$route.params.id;
-            app.department_id = id;
+            let id = this.$route.params.id
+            this.user_id = id
 
-            axios.get('/api/departments/show/' + id)
-                .then( response => {
-                    this.department = response.data.department
-                    console.log(app.department);
-                })
-                .catch(function () {
-                    alert("Could not load your company")
-                });
+            axios.get('/api/users/show/' + id)
+            .then(response => {
+                this.user = response.data.user
+            })
+            .catch(error => {
+                console.log(error)
+                alert('Could not load user!')
+            })
         },
-        data: function () {
+        data: function() {
             return {
-                department_id: null,
-                department: {
-                    name: '',
-                    description: '',
-                    active: '',
+                user_id: null,
+                user: {
+                    username: '',
+                    email: '',
+                    role_id: ''
                 }
             }
         },
         methods: {
             submitForm() {
-                event.preventDefault();
+                event.preventDefault()
 
-                var newDepartment = this.department;
-                console.log(this.department_id);
-
-                axios.put('/api/departments/update/' + this.department_id, newDepartment)
-                    .then(response => {
-                        this.$router.replace('/department');
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        alert("Could not update your company");
-                    });
+                var newUser = this.user
+                axios.put('/api/users/update/' + this.user_id, newUser)
+                .then(response => {
+                    this.$router.replace('/user')
+                })
+                .catch(error => {
+                    console.log(error)
+                    alert("Could not update User!")
+                });
             }
         }
-	}
+    }
 </script>
 
 <style>
-	
+    
 </style>
