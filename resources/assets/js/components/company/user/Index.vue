@@ -2,7 +2,7 @@
 	<div class="content">
 		<div class="row wrapper border-bottom white-bg page-heading">
 		    <div class="col-lg-10">
-		        <h2>Grid Options - based on Bootstrap Grid system overview</h2>
+		        <h2>User Management</h2>
 		        <ol class="breadcrumb">
 		            <li>
 		                <router-link :to="{name:'userAdd'}"><a href="" class="btn btn-warning"><i class="fa fa-plus"></i>Add new user</a></router-link>
@@ -85,7 +85,6 @@
 			axios.get('api/users/index')
 			.then(response => {
 				this.users = response.data.users
-				console.log(this.users)
 			})
 			.catch(error => {
 				console.log(error)

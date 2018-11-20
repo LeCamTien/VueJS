@@ -36,10 +36,10 @@ class DepartmentController extends Controller
      * @param DepartmentRepository $repository
      * @param DepartmentValidator $validator
      */
-    public function __construct(DepartmentRepository $repository, DepartmentValidator $validator)
+    public function __construct(DepartmentRepository $repository)
     {
         $this->repository = $repository;
-        $this->validator  = $validator;
+        //$this->validator  = $validator;
     }
 
     /**
@@ -49,7 +49,7 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+        //$this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
         $departments = $this->repository->all();
 
         if (request()->wantsJson()) {

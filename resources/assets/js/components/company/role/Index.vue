@@ -2,7 +2,7 @@
 <div class="content">
 	<div class="row wrapper border-bottom white-bg page-heading">
 	    <div class="col-lg-10">
-	        <h2>Grid Options - based on Bootstrap Grid system overview</h2>
+	        <h2>Role Management</h2>
 	        <ol class="breadcrumb">
 	            <li>
 	                <router-link :to="{name:'roleAdd'}"><a href="" class="btn btn-warning"><i class="fa fa-plus"></i>Add new role</a></router-link>
@@ -86,7 +86,6 @@
             axios.get('/api/roles/index')
                 .then(response => {
                     this.roles = response.data.roles
-                    console.log(this.roles)
                 })
                 .catch(error => {
                     console.log(error);

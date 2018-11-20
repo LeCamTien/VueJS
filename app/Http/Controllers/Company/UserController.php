@@ -36,10 +36,10 @@ class UserController extends Controller
      * @param UserRepository $repository
      * @param UserValidator $validator
      */
-    public function __construct(UserRepository $repository, UserValidator $validator)
+    public function __construct(UserRepository $repository)
     {
         $this->repository = $repository;
-        $this->validator  = $validator;
+        //$this->validator  = $validator;
     }
 
     /**
@@ -49,7 +49,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+        //$this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
         $users = $this->repository->all(); 
 
         if (request()->wantsJson()) {
@@ -151,7 +151,7 @@ class UserController extends Controller
     {
         try {
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
+            //$this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
             $user = $this->repository->update($request->all(), $id);
 

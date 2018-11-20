@@ -24,18 +24,28 @@
             </div>
             <div class="ibox-content">
                 <form method="post" v-on:submit="submitForm()" enctype="multipart/form-data" class="form-horizontal">
-                    <div class="form-group"><label class="col-sm-2 control-label">Role Name</label>
-                        <div class="col-sm-10"><input type="text" name="name" v-model="role.name" v-validate="'required'" class="form-control"></div>
-                    </div>
-                    <h4 v-show="errors.has('role.name')">{{ errors.first('role.name') }}</h4>
-                    <div class="hr-line-dashed"></div>
-                    <div class="form-group"><label class="col-sm-2 control-label">Description</label>
-                        <div class="col-sm-10"><input type="text" v-model="role.description" class="form-control">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Role Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="name" v-model="role.name" v-validate="'required'" class="form-control">
+                            <h4 style="color: red"><span v-show="errors.has('name')">{{ errors.first('name') }}</span></h4>
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
-                    <div class="form-group"><label class="col-sm-2 control-label">Active</label>
-                        <div class="col-sm-10"><input type="text" v-model="role.active" class="form-control" name="password"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Description</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="description" v-model="role.description" v-validate="'required'" class="form-control">
+                            <h4 style="color: red"><span v-show="errors.has('description')">{{ errors.first('description') }}</span></h4>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Active</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="active" v-model="role.active" v-validate="'required|numeric'" class="form-control">
+                            <h4 style="color: red"><span v-show="errors.has('active')">{{ errors.first('active') }}</span></h4>
+                        </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group">
@@ -52,6 +62,10 @@
 </template>
 
 <script>
+    import Vue from 'vue'
+    import VeeValidate from 'vee-validate'
+
+    Vue.use(VeeValidate)
 	export default {
 		data: function() {
 			return {
@@ -64,18 +78,22 @@
 		},
 		methods: {
 			submitForm() {
-				event.preventDefault();
+    			event.preventDefault();
 
-				var newRole = this.role;
-console.log(newRole)
-				axios.post('/api/roles/store',  newRole)
-				.then(response => {
-					this.$router.replace('/role')
-				})
-				.catch(error => {
-					console.log(error);
-					alert("Could not create new role");
-				});
+    			var newRole = this.role;
+                this.$validator.validateAll().then((result) => {
+                    if (result) {
+                        axios.post('/api/roles/store',  newRole)
+                        .then(response => {
+                            this.$router.replace('/role')
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            alert("Could not create new role");
+                        });
+                    }
+                });
+				 
 			}
 		}
 	}

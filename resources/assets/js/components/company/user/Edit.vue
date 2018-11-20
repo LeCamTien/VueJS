@@ -25,7 +25,7 @@
             <div class="ibox-content">
                 <form method="POST" v-on:submit="submitForm()" class="form-horizontal">
                     <div class="form-group"><label class="col-sm-2 control-label">Username</label>
-                        <div class="col-sm-10"><input type="text" v-model="user.username" class="form-control"></div>
+                        <div class="col-sm-10"><input type="text" v-model="user.username" readonly="" class="form-control"></div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group"><label class="col-sm-2 control-label">Email</label>

@@ -24,17 +24,28 @@
             </div>
             <div class="ibox-content">
                 <form method="post" v-on:submit="submitForm()" enctype="multipart/form-data" class="form-horizontal">
-                    <div class="form-group"><label class="col-sm-2 control-label">Department Name</label>
-                        <div class="col-sm-10"><input type="text" v-model="department.name" class="form-control"></div>
-                    </div>
-                    <div class="hr-line-dashed"></div>
-                    <div class="form-group"><label class="col-sm-2 control-label">Description</label>
-                        <div class="col-sm-10"><input type="text" v-model="department.description" class="form-control">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Department Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="name" v-model="department.name" v-validate="'required'" class="form-control">
+                            <h4 style="color: red"><span v-show="errors.has('name')">{{ errors.first('name') }}</span></h4>
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
-                    <div class="form-group"><label class="col-sm-2 control-label">Active</label>
-                        <div class="col-sm-10"><input type="text" v-model="department.active" class="form-control" name="password"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Description</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="description" v-model="department.description" v-validate="'required'" class="form-control">
+                            <h4 style="color: red"><span v-show="errors.has('description')">{{ errors.first('description') }}</span></h4>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Active</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="active" v-model="department.active" v-validate="'required|numeric'" class="form-control">
+                            <h4 style="color: red"><span v-show="errors.has('active')">{{ errors.first('active') }}</span></h4>
+                        </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group">
@@ -66,16 +77,20 @@
                 event.preventDefault();
 
                 var newDepartment = this.department;
-                console.log(newDepartment);
-
-                axios.post('/api/departments/store', newDepartment)
-                    .then(response => {
-                        this.$router.push({path: '/department'});
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        alert("Could not create your company");
-                    });
+                
+                this.$validator.validateAll().then((result) => {
+                    if (result) {
+                        axios.post('/api/departments/store', newDepartment)
+                        .then(response => {
+                            this.$router.push({path: '/department'});
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            alert("Could not create your company");
+                        }); 
+                    }
+                })
+                
             }
         }
 	}

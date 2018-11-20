@@ -36,10 +36,10 @@ class RoleController extends Controller
      * @param RoleRepository $repository
      * @param RoleValidator $validator
      */
-    public function __construct(RoleRepository $repository, RoleValidator $validator)
+    public function __construct(RoleRepository $repository)
     {
         $this->repository = $repository;
-        $this->validator  = $validator;
+        //$this->validator  = $validator;
     }
 
     /**
@@ -151,7 +151,7 @@ class RoleController extends Controller
     {
         try {
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
+            //$this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
             $role = $this->repository->update($request->all(), $id);
 

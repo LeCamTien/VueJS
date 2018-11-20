@@ -59,7 +59,6 @@
             axios.get('/api/departments/show/' + id)
                 .then( response => {
                     this.department = response.data.department
-                    console.log(app.department);
                 })
                 .catch(function () {
                     alert("Could not load your company")

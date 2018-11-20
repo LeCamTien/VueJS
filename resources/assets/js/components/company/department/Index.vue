@@ -2,7 +2,7 @@
 <div class="content">
 	<div class="row wrapper border-bottom white-bg page-heading">
 	    <div class="col-lg-10">
-	        <h2>Grid Options - based on Bootstrap Grid system overview</h2>
+	        <h2>Department Management</h2>
 	        <ol class="breadcrumb">
 	            <li>
 	                <router-link :to="{name:'departmentAdd'}"><a href="" class="btn btn-warning"><i class="fa fa-plus"></i>Add new department</a></router-link>
@@ -18,7 +18,7 @@
 	        <div class="col-lg-12">
 	            <div class="ibox float-e-margins">
 	                <div class="ibox-title">
-	                    <h5>User</h5>
+	                    <h5>Department</h5>
 	                    <div class="ibox-tools">
 	                        <a class="collapse-link">
 	                            <i class="fa fa-chevron-up"></i>

@@ -60291,9 +60291,7 @@ var render = function() {
       { staticClass: "row wrapper border-bottom white-bg page-heading" },
       [
         _c("div", { staticClass: "col-lg-10" }, [
-          _c("h2", [
-            _vm._v("Grid Options - based on Bootstrap Grid system overview")
-          ]),
+          _c("h2", [_vm._v("Department Management")]),
           _vm._v(" "),
           _c("ol", { staticClass: "breadcrumb" }, [
             _c(
@@ -60418,7 +60416,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "ibox-title" }, [
-      _c("h5", [_vm._v("User")]),
+      _c("h5", [_vm._v("Department")]),
       _vm._v(" "),
       _c("div", { staticClass: "ibox-tools" }, [
         _c("a", { staticClass: "collapse-link" }, [
@@ -60564,7 +60562,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -60575,6 +60573,17 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -60645,13 +60654,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             event.preventDefault();
 
             var newDepartment = this.department;
-            console.log(newDepartment);
 
-            axios.post('/api/departments/store', newDepartment).then(function (response) {
-                _this.$router.push({ path: '/department' });
-            }).catch(function (error) {
-                console.log(error);
-                alert("Could not create your company");
+            this.$validator.validateAll().then(function (result) {
+                if (result) {
+                    axios.post('/api/departments/store', newDepartment).then(function (response) {
+                        _this.$router.push({ path: '/department' });
+                    }).catch(function (error) {
+                        console.log(error);
+                        alert("Could not create your company");
+                    });
+                }
             });
         }
     }
@@ -60696,10 +60708,16 @@ var render = function() {
                         rawName: "v-model",
                         value: _vm.department.name,
                         expression: "department.name"
+                      },
+                      {
+                        name: "validate",
+                        rawName: "v-validate",
+                        value: "required",
+                        expression: "'required'"
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { type: "text" },
+                    attrs: { type: "text", name: "name" },
                     domProps: { value: _vm.department.name },
                     on: {
                       input: function($event) {
@@ -60709,7 +60727,24 @@ var render = function() {
                         _vm.$set(_vm.department, "name", $event.target.value)
                       }
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _c("h4", { staticStyle: { color: "red" } }, [
+                    _c(
+                      "span",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.errors.has("name"),
+                            expression: "errors.has('name')"
+                          }
+                        ]
+                      },
+                      [_vm._v(_vm._s(_vm.errors.first("name")))]
+                    )
+                  ])
                 ])
               ]),
               _vm._v(" "),
@@ -60728,10 +60763,16 @@ var render = function() {
                         rawName: "v-model",
                         value: _vm.department.description,
                         expression: "department.description"
+                      },
+                      {
+                        name: "validate",
+                        rawName: "v-validate",
+                        value: "required",
+                        expression: "'required'"
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { type: "text" },
+                    attrs: { type: "text", name: "description" },
                     domProps: { value: _vm.department.description },
                     on: {
                       input: function($event) {
@@ -60745,7 +60786,24 @@ var render = function() {
                         )
                       }
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _c("h4", { staticStyle: { color: "red" } }, [
+                    _c(
+                      "span",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.errors.has("description"),
+                            expression: "errors.has('description')"
+                          }
+                        ]
+                      },
+                      [_vm._v(_vm._s(_vm.errors.first("description")))]
+                    )
+                  ])
                 ])
               ]),
               _vm._v(" "),
@@ -60764,10 +60822,16 @@ var render = function() {
                         rawName: "v-model",
                         value: _vm.department.active,
                         expression: "department.active"
+                      },
+                      {
+                        name: "validate",
+                        rawName: "v-validate",
+                        value: "required|numeric",
+                        expression: "'required|numeric'"
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { type: "text", name: "password" },
+                    attrs: { type: "text", name: "active" },
                     domProps: { value: _vm.department.active },
                     on: {
                       input: function($event) {
@@ -60777,7 +60841,24 @@ var render = function() {
                         _vm.$set(_vm.department, "active", $event.target.value)
                       }
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _c("h4", { staticStyle: { color: "red" } }, [
+                    _c(
+                      "span",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.errors.has("active"),
+                            expression: "errors.has('active')"
+                          }
+                        ]
+                      },
+                      [_vm._v(_vm._s(_vm.errors.first("active")))]
+                    )
+                  ])
                 ])
               ]),
               _vm._v(" "),
@@ -60948,7 +61029,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -61021,7 +61102,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         axios.get('/api/departments/show/' + id).then(function (response) {
             _this.department = response.data.department;
-            console.log(app.department);
         }).catch(function () {
             alert("Could not load your company");
         });
@@ -61341,7 +61421,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -61440,7 +61520,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         axios.get('/api/roles/index').then(function (response) {
             _this.roles = response.data.roles;
-            console.log(_this.roles);
         }).catch(function (error) {
             console.log(error);
             alert("Could not load role");
@@ -61478,9 +61557,7 @@ var render = function() {
       { staticClass: "row wrapper border-bottom white-bg page-heading" },
       [
         _c("div", { staticClass: "col-lg-10" }, [
-          _c("h2", [
-            _vm._v("Grid Options - based on Bootstrap Grid system overview")
-          ]),
+          _c("h2", [_vm._v("Role Management")]),
           _vm._v(" "),
           _c("ol", { staticClass: "breadcrumb" }, [
             _c(
@@ -61744,7 +61821,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -61755,6 +61832,19 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vee_validate__ = __webpack_require__(46);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -61809,32 +61899,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
+
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vee_validate__["a" /* default */]);
 /* harmony default export */ __webpack_exports__["default"] = ({
-	data: function data() {
-		return {
-			role: {
-				name: '',
-				description: '',
-				active: ''
-			}
-		};
-	},
-	methods: {
-		submitForm: function submitForm() {
-			var _this = this;
+  data: function data() {
+    return {
+      role: {
+        name: '',
+        description: '',
+        active: ''
+      }
+    };
+  },
+  methods: {
+    submitForm: function submitForm() {
+      var _this = this;
 
-			event.preventDefault();
+      event.preventDefault();
 
-			var newRole = this.role;
-			console.log(newRole);
-			axios.post('/api/roles/store', newRole).then(function (response) {
-				_this.$router.replace('/role');
-			}).catch(function (error) {
-				console.log(error);
-				alert("Could not create new role");
-			});
-		}
-	}
+      var newRole = this.role;
+      this.$validator.validateAll().then(function (result) {
+        if (result) {
+          axios.post('/api/roles/store', newRole).then(function (response) {
+            _this.$router.replace('/role');
+          }).catch(function (error) {
+            console.log(error);
+            alert("Could not create new role");
+          });
+        }
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -61895,24 +61992,26 @@ var render = function() {
                         _vm.$set(_vm.role, "name", $event.target.value)
                       }
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _c("h4", { staticStyle: { color: "red" } }, [
+                    _c(
+                      "span",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.errors.has("name"),
+                            expression: "errors.has('name')"
+                          }
+                        ]
+                      },
+                      [_vm._v(_vm._s(_vm.errors.first("name")))]
+                    )
+                  ])
                 ])
               ]),
-              _vm._v(" "),
-              _c(
-                "h4",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.errors.has("role.name"),
-                      expression: "errors.has('role.name')"
-                    }
-                  ]
-                },
-                [_vm._v(_vm._s(_vm.errors.first("role.name")))]
-              ),
               _vm._v(" "),
               _c("div", { staticClass: "hr-line-dashed" }),
               _vm._v(" "),
@@ -61929,10 +62028,16 @@ var render = function() {
                         rawName: "v-model",
                         value: _vm.role.description,
                         expression: "role.description"
+                      },
+                      {
+                        name: "validate",
+                        rawName: "v-validate",
+                        value: "required",
+                        expression: "'required'"
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { type: "text" },
+                    attrs: { type: "text", name: "description" },
                     domProps: { value: _vm.role.description },
                     on: {
                       input: function($event) {
@@ -61942,7 +62047,24 @@ var render = function() {
                         _vm.$set(_vm.role, "description", $event.target.value)
                       }
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _c("h4", { staticStyle: { color: "red" } }, [
+                    _c(
+                      "span",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.errors.has("description"),
+                            expression: "errors.has('description')"
+                          }
+                        ]
+                      },
+                      [_vm._v(_vm._s(_vm.errors.first("description")))]
+                    )
+                  ])
                 ])
               ]),
               _vm._v(" "),
@@ -61961,10 +62083,16 @@ var render = function() {
                         rawName: "v-model",
                         value: _vm.role.active,
                         expression: "role.active"
+                      },
+                      {
+                        name: "validate",
+                        rawName: "v-validate",
+                        value: "required|numeric",
+                        expression: "'required|numeric'"
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { type: "text", name: "password" },
+                    attrs: { type: "text", name: "active" },
                     domProps: { value: _vm.role.active },
                     on: {
                       input: function($event) {
@@ -61974,7 +62102,24 @@ var render = function() {
                         _vm.$set(_vm.role, "active", $event.target.value)
                       }
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _c("h4", { staticStyle: { color: "red" } }, [
+                    _c(
+                      "span",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.errors.has("active"),
+                            expression: "errors.has('active')"
+                          }
+                        ]
+                      },
+                      [_vm._v(_vm._s(_vm.errors.first("active")))]
+                    )
+                  ])
                 ])
               ]),
               _vm._v(" "),
@@ -62669,9 +62814,7 @@ var render = function() {
       { staticClass: "row wrapper border-bottom white-bg page-heading" },
       [
         _c("div", { staticClass: "col-lg-10" }, [
-          _c("h2", [
-            _vm._v("Grid Options - based on Bootstrap Grid system overview")
-          ]),
+          _c("h2", [_vm._v("User Management")]),
           _vm._v(" "),
           _c("ol", { staticClass: "breadcrumb" }, [
             _c(
@@ -62935,7 +63078,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -62946,6 +63089,25 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -63020,12 +63182,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             event.preventDefault();
 
             var newUser = this.user;
-            console.log(newUser);
-            axios.post('/api/users/store', newUser).then(function (response) {
-                _this.$router.replace('/user');
-            }).catch(function (error) {
-                console.log(error);
-                alert("Could not create new User!");
+
+            this.$validator.validateAll().then(function (result) {
+                if (result) {
+                    axios.post('/api/users/store', newUser).then(function (response) {
+                        _this.$router.replace('/user');
+                    }).catch(function (error) {
+                        console.log(error);
+                        alert("Could not create new User!");
+                    });
+                }
             });
         }
     }
@@ -63070,10 +63236,20 @@ var render = function() {
                         rawName: "v-model",
                         value: _vm.user.username,
                         expression: "user.username"
+                      },
+                      {
+                        name: "validate",
+                        rawName: "v-validate",
+                        value: "required",
+                        expression: "'required'"
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { type: "text" },
+                    attrs: {
+                      type: "text",
+                      name: "username",
+                      autocomplete: "off"
+                    },
                     domProps: { value: _vm.user.username },
                     on: {
                       input: function($event) {
@@ -63083,7 +63259,24 @@ var render = function() {
                         _vm.$set(_vm.user, "username", $event.target.value)
                       }
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _c("h4", { staticStyle: { color: "red" } }, [
+                    _c(
+                      "span",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.errors.has("username"),
+                            expression: "errors.has('username')"
+                          }
+                        ]
+                      },
+                      [_vm._v(_vm._s(_vm.errors.first("username")))]
+                    )
+                  ])
                 ])
               ]),
               _vm._v(" "),
@@ -63100,10 +63293,16 @@ var render = function() {
                         rawName: "v-model",
                         value: _vm.user.password,
                         expression: "user.password"
+                      },
+                      {
+                        name: "validate",
+                        rawName: "v-validate",
+                        value: "required",
+                        expression: "'required'"
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { type: "password" },
+                    attrs: { type: "password", name: "password" },
                     domProps: { value: _vm.user.password },
                     on: {
                       input: function($event) {
@@ -63113,7 +63312,24 @@ var render = function() {
                         _vm.$set(_vm.user, "password", $event.target.value)
                       }
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _c("h4", { staticStyle: { color: "red" } }, [
+                    _c(
+                      "span",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.errors.has("password"),
+                            expression: "errors.has('password')"
+                          }
+                        ]
+                      },
+                      [_vm._v(_vm._s(_vm.errors.first("password")))]
+                    )
+                  ])
                 ])
               ]),
               _vm._v(" "),
@@ -63132,10 +63348,16 @@ var render = function() {
                         rawName: "v-model",
                         value: _vm.user.email,
                         expression: "user.email"
+                      },
+                      {
+                        name: "validate",
+                        rawName: "v-validate",
+                        value: "required|email",
+                        expression: "'required|email'"
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { type: "text" },
+                    attrs: { type: "text", name: "email" },
                     domProps: { value: _vm.user.email },
                     on: {
                       input: function($event) {
@@ -63145,7 +63367,24 @@ var render = function() {
                         _vm.$set(_vm.user, "email", $event.target.value)
                       }
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _c("h4", { staticStyle: { color: "red" } }, [
+                    _c(
+                      "span",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.errors.has("email"),
+                            expression: "errors.has('email')"
+                          }
+                        ]
+                      },
+                      [_vm._v(_vm._s(_vm.errors.first("email")))]
+                    )
+                  ])
                 ])
               ]),
               _vm._v(" "),
@@ -63157,27 +63396,68 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-sm-10" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.user.role_id,
-                        expression: "user.role_id"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "text", name: "password" },
-                    domProps: { value: _vm.user.role_id },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.user.role_id,
+                          expression: "user.role_id"
                         }
-                        _vm.$set(_vm.user, "role_id", $event.target.value)
+                      ],
+                      staticClass: "form-group",
+                      attrs: { name: "role_id" },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.user,
+                            "role_id",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
                       }
-                    }
-                  })
+                    },
+                    [
+                      _c("option", { attrs: { disabled: "", value: "" } }, [
+                        _vm._v("Please select one")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "1" } }, [
+                        _vm._v("Admin")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "2" } }, [_vm._v("User")])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("h4", { staticStyle: { color: "red" } }, [
+                    _c(
+                      "span",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.errors.has("role_id"),
+                            expression: "errors.has('role_id')"
+                          }
+                        ]
+                      },
+                      [_vm._v(_vm._s(_vm.errors.first("role_id")))]
+                    )
+                  ])
                 ])
               ]),
               _vm._v(" "),
@@ -63495,7 +63775,7 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { type: "text" },
+                    attrs: { type: "text", readonly: "" },
                     domProps: { value: _vm.user.username },
                     on: {
                       input: function($event) {
@@ -64007,22 +64287,8 @@ var render = function() {
                   _vm._v(" "),
                   _c("span", { staticClass: "nav-label" }, [_vm._v("User ")]),
                   _c("span", { staticClass: "label label-info pull-right" }, [
-                    _vm._v("62")
+                    _vm._v("5")
                   ])
-                ])
-              ])
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "li",
-            [
-              _c("router-link", { attrs: { to: { name: "role" } } }, [
-                _c("a", { attrs: { href: "package.html" } }, [
-                  _c("i", { staticClass: "fa fa-database" }),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "nav-label" }, [_vm._v("Package")])
                 ])
               ])
             ],
