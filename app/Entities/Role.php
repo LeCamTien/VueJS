@@ -21,12 +21,13 @@ class Role extends Model implements Transformable
      * @var array
      */
     protected $table = 'roles';
+    protected $primaryKey = 'role_id';
+    public $timestamps = false;
+
     protected $fillable = [
-        'id',
         'name',
-        'created_at',
-        'updated_at',
-        'deleted_at',
+        'description',
+        'active'
     ];
 
 }

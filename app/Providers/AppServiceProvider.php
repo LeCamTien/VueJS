@@ -6,8 +6,12 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 use App;
-use App\Repositories\User\UserRepository;
-use App\Repositories\User\UserRepositoryEloquent;
+use App\Repositories\UserRepository;
+use App\Repositories\UserRepositoryEloquent;
+use App\Repositories\DepartmentRepository;
+use App\Repositories\DepartmentRepositoryEloquent;
+use App\Repositories\RoleRepository;
+use App\Repositories\RoleRepositoryEloquent;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,5 +33,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         App::bind(UserRepository::class, UserRepositoryEloquent::class);
+        App::bind(DepartmentRepository::class, DepartmentRepositoryEloquent::class);
+        App::bind(RoleRepository::class, RoleRepositoryEloquent::class);
     }
 }

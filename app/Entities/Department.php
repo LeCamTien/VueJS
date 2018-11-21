@@ -21,12 +21,13 @@ class Department extends Model implements Transformable
      * @var array
      */
     protected $table = 'departments';
+    protected $primaryKey = "department_id";
+    public $timestamps = false;
+
     protected $fillable = [
-        'id',
         'name',
-        'created_at',
-        'updated_at',
-        'deleted_at',
+        'description',
+        'active',
     ];
 
 }

@@ -1,44 +1,45 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Company;
 
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Http\Controllers\Controller;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
-use App\Http\Requests\DepartmentCreateRequest;
-use App\Http\Requests\DepartmentUpdateRequest;
-use App\Repositories\DepartmentRepository;
-use App\Validators\DepartmentValidator;
+use App\Http\Requests\RoleCreateRequest;
+use App\Http\Requests\RoleUpdateRequest;
+use App\Repositories\RoleRepository;
+use App\Validators\RoleValidator;
 
 /**
- * Class DepartmentsController.
+ * Class RolesController.
  *
  * @package namespace App\Http\Controllers;
  */
-class DepartmentsController extends Controller
+class RoleController extends Controller
 {
     /**
-     * @var DepartmentRepository
+     * @var RoleRepository
      */
     protected $repository;
 
     /**
-     * @var DepartmentValidator
+     * @var RoleValidator
      */
     protected $validator;
 
     /**
-     * DepartmentsController constructor.
+     * RolesController constructor.
      *
-     * @param DepartmentRepository $repository
-     * @param DepartmentValidator $validator
+     * @param RoleRepository $repository
+     * @param RoleValidator $validator
      */
-    public function __construct(DepartmentRepository $repository, DepartmentValidator $validator)
+    public function __construct(RoleRepository $repository)
     {
         $this->repository = $repository;
-        $this->validator  = $validator;
+        //$this->validator  = $validator;
     }
 
     /**
@@ -48,39 +49,39 @@ class DepartmentsController extends Controller
      */
     public function index()
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $departments = $this->repository->all();
+        //$this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+        $roles = $this->repository->all(); 
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $departments,
+                'roles' => $roles,
             ]);
         }
 
-        return view('departments.index', compact('departments'));
+        //return view('roles.index', compact('roles'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  DepartmentCreateRequest $request
+     * @param  RoleCreateRequest $request
      *
      * @return \Illuminate\Http\Response
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function store(DepartmentCreateRequest $request)
+    public function store(Request $request)
     {
         try {
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
+            //$this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-            $department = $this->repository->create($request->all());
+            $role = $this->repository->create($request->all());
 
             $response = [
-                'message' => 'Department created.',
-                'data'    => $department->toArray(),
+                'message' => 'Role created.',
+                'data'    => $role->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -110,16 +111,16 @@ class DepartmentsController extends Controller
      */
     public function show($id)
     {
-        $department = $this->repository->find($id);
+        $role = $this->repository->find($id);
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $department,
+                'role' => $role,
             ]);
         }
 
-        return view('departments.show', compact('department'));
+        return view('roles.show', compact('role'));
     }
 
     /**
@@ -131,32 +132,32 @@ class DepartmentsController extends Controller
      */
     public function edit($id)
     {
-        $department = $this->repository->find($id);
+        $role = $this->repository->find($id);
 
-        return view('departments.edit', compact('department'));
+        return view('roles.edit', compact('role'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  DepartmentUpdateRequest $request
+     * @param  RoleUpdateRequest $request
      * @param  string            $id
      *
      * @return Response
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function update(DepartmentUpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
         try {
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
+            //$this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
-            $department = $this->repository->update($request->all(), $id);
+            $role = $this->repository->update($request->all(), $id);
 
             $response = [
-                'message' => 'Department updated.',
-                'data'    => $department->toArray(),
+                'message' => 'Role updated.',
+                'data'    => $role->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -194,11 +195,11 @@ class DepartmentsController extends Controller
         if (request()->wantsJson()) {
 
             return response()->json([
-                'message' => 'Department deleted.',
+                'message' => 'Role deleted.',
                 'deleted' => $deleted,
             ]);
         }
 
-        return redirect()->back()->with('message', 'Department deleted.');
+        return redirect()->back()->with('message', 'Role deleted.');
     }
 }
