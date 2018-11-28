@@ -8,38 +8,39 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
-use App\Http\Requests\UserCreateRequest;
-use App\Http\Requests\UserUpdateRequest;
-use App\Repositories\UserRepository;
-use App\Validators\UserValidator;
+use App\Http\Requests\WorkflowCreateRequest;
+use App\Http\Requests\WorkflowUpdateRequest;
+use App\Repositories\WorkflowRepository;
+use App\Validators\WorkflowValidator;
+use Illuminate\Support\Facades\Storage;
 
 /**
- * Class UsersController.
+ * Class WorkflowsController.
  *
  * @package namespace App\Http\Controllers;
  */
-class UserController extends Controller
+class WorkflowController extends Controller
 {
     /**
-     * @var UserRepository
+     * @var WorkflowRepository
      */
     protected $repository;
 
     /**
-     * @var UserValidator
+     * @var WorkflowValidator
      */
     protected $validator;
 
     /**
-     * UsersController constructor.
+     * WorkflowsController constructor.
      *
-     * @param UserRepository $repository
-     * @param UserValidator $validator
+     * @param WorkflowRepository $repository
+     * @param WorkflowValidator $validator
      */
-    public function __construct(UserRepository $repository)
+    public function __construct(WorkflowRepository $repository, WorkflowValidator $validator)
     {
         $this->repository = $repository;
-        //$this->validator  = $validator;
+        $this->validator  = $validator;
     }
 
     /**
@@ -49,35 +50,23 @@ class UserController extends Controller
      */
     public function index()
     {
-        //$this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $users = $this->repository->all(); 
+        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+        $workflows = $this->repository->all(); 
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'users' => $users,
+                'data' => $workflows,
             ]);
         }
 
-        return view('users.index', compact('users'));
-    }
-
-    public function getCountUser()
-    {
-        $count = $this->repository->getCountUser(); 
-
-        if (request()->wantsJson()) {
-            
-            return response()->json([
-                'data' => $count,
-            ]);
-        }
+        return view('workflows.index', compact('workflows'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  UserCreateRequest $request
+     * @param  WorkflowCreateRequest $request
      *
      * @return \Illuminate\Http\Response
      *
@@ -87,13 +76,27 @@ class UserController extends Controller
     {
         try {
 
-            //$this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
+            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-            $user = $this->repository->create($request->all());
+            //upload file
+            if ($request->file('diagram') != null) {
+                $path = $request->file('diagram')->store('files');
+                $tmp = explode('/', $path);
+                $diagram = end($tmp);
+            }
+             
+            $arItems = array(
+                            'name' => $request->name,
+                            'description' => $request->description,
+                            'diagram' => $diagram,
+                            'explanation' => $request->explanation,
+                        );
+            
+            $workflow = $this->repository->create($arItems);
 
             $response = [
-                'message' => 'User created.',
-                'data'    => $user->toArray(),
+                'message' => 'Workflow created.',
+                'data'    => $workflow->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -123,16 +126,16 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = $this->repository->find($id);
+        $workflow = $this->repository->getDetail($id);
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'user' => $user,
+                'data' => $workflow,
             ]);
         }
 
-        return view('users.show', compact('user'));
+        return view('workflows.show', compact('workflow'));
     }
 
     /**
@@ -144,15 +147,15 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = $this->repository->find($id);
+        $workflow = $this->repository->find($id);
 
-        return view('users.edit', compact('user'));
+        return view('workflows.edit', compact('workflow'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  UserUpdateRequest $request
+     * @param  WorkflowUpdateRequest $request
      * @param  string            $id
      *
      * @return Response
@@ -165,11 +168,32 @@ class UserController extends Controller
 
             //$this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
-            $user = $this->repository->update($request->all(), $id);
+            $oldWorkflow = $this->repository->find($id);
+            //upload new file
+            if ($request->file('diagram') != null) {
+                $path = $request->file('diagram')->store('files');
+                $tmp = explode('/', $path);
+                $diagram = end($tmp);
+
+                //delete old file
+                $oldDiagram = $oldWorkflow->diagram;
+                if ($oldDiagram != '') {
+                    Storage::delete('files/'.$oldDiagram);
+                }
+            } else {
+                $diagram = $oldWorkflow->diagram;
+            }
+            $arItem = array(
+                            'name' => $request->name,
+                            'description' => $request->description,
+                            'diagram' => $diagram,
+                            'explanation' => $request->explanation,
+                        );
+            $workflow = $this->repository->update($arItem, $id);
 
             $response = [
-                'message' => 'User updated.',
-                'data'    => $user->toArray(),
+                'message' => 'Workflow updated.',
+                'data'    => $workflow->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -202,16 +226,22 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $workflow = $this->repository->find($id);
+        $diagram = $workflow->diagram;
+        if ($diagram != '') {
+            Storage::delete('files/'.$diagram);
+        }
+
         $deleted = $this->repository->delete($id);
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'message' => 'User deleted.',
+                'message' => 'Workflow deleted.',
                 'deleted' => $deleted,
             ]);
         }
 
-        return redirect()->back()->with('message', 'User deleted.');
+        return redirect()->back()->with('message', 'Workflow deleted.');
     }
 }

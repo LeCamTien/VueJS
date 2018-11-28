@@ -46,22 +46,20 @@
 	                                    <th>Name</th>
 	                                    <th>Description</th>
 	                                    <th>Active</th>
-	                                    <th>Function</th>
+	                                    <th width="180px">Function</th>
 	                                </tr>
 	                            </thead>
 	                            <tbody>
-	                                
 	                                <tr v-for="department, index in departments" >
 	                                    <th>{{ department.department_id }}</th>
 	                                    <td>{{ department.name }}</td>
 	                                    <td>{{ department.description }}</td>
 	                                    <td>{{ department.active }}</td>
 	                                    <td>
-	                                    	<router-link :to="{name:'departmentEdit', params: {id:department.department_id}}"><a href="" title="" class="btn btn-primary"><i class="fa fa-edit"></i> Sửa</a></router-link>
-                                            <a href="#" title="" v-on:click="deleteItem(department.department_id, index)" class="btn btn-danger"><i class="fa fa-pencil"></i> Xóa</a>
+	                                    	<router-link :to="{name:'departmentEdit', params: {id:department.department_id}}"><a href="" title="" class="btn btn-primary"><i class="fa fa-edit"></i> Edit</a></router-link>
+                                            <a href="#" title="" v-on:click="deleteItem(department.department_id, index)" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
 	                                    </td>
 	                                </tr>
-	                                
 	                            </tbody>
 	                        </table>
 	                    </div>

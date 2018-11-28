@@ -4,16 +4,16 @@ namespace App\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\UserRepository;
-use App\Entities\User;
-use App\Validators\UserValidator;
+use App\Repositories\WorkflowRepository;
+use App\Entities\Workflow;
+use App\Validators\WorkflowValidator;
 
 /**
- * Class UserRepositoryEloquent.
+ * Class WorkflowRepositoryEloquent.
  *
  * @package namespace App\Repositories;
  */
-class UserRepositoryEloquent extends BaseRepository implements UserRepository
+class WorkflowRepositoryEloquent extends BaseRepository implements WorkflowRepository
 {
     /**
      * Specify Model class name
@@ -22,7 +22,7 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
      */
     public function model()
     {
-        return User::class;
+        return Workflow::class;
     }
 
     /**
@@ -33,7 +33,7 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
     public function validator()
     {
 
-        return UserValidator::class;
+        return WorkflowValidator::class;
     }
 
 
@@ -44,9 +44,10 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
-    
-    public function getCountUser()
+
+    public function getDetail($id)
     {
-        return User::count();
+        return Workflow::find($id);
     }
+    
 }

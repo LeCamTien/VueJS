@@ -35,7 +35,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Description</label>
                         <div class="col-sm-10">
-                            <input type="text" name="description" v-model="role.description" v-validate="'required'" class="form-control">
+                            <textarea name="description" v-model="role.description" v-validate="'required'" rows="3" class="form-control"></textarea>
                             <h4 style="color: red"><span v-show="errors.has('description')">{{ errors.first('description') }}</span></h4>
                         </div>
                     </div>

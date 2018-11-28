@@ -35,8 +35,17 @@ Route::group(['namespace' => 'Company', 'prefix' => 'roles'], function() {
 
 Route::group(['namespace' => 'Company', 'prefix' => 'users'], function() {
 	Route::get('index', 'UserController@index');
+	Route::get('getCountUser', 'UserController@getCountUser');
 	Route::get('show/{id}', 'UserController@show');
 	Route::post('store', 'UserController@store');
 	Route::put('update/{id}', 'UserController@update');
 	Route::delete('delete/{id}', 'UserController@destroy');
+});
+
+Route::group(['namespace' => 'Company', 'prefix' => 'workflows'], function() {
+	Route::get('index', 'WorkflowController@index');
+	Route::get('show/{id}', 'WorkflowController@show');
+	Route::post('store', 'WorkflowController@store');
+	Route::post('update/{id}', 'WorkflowController@update');
+	Route::delete('delete/{id}', 'WorkflowController@destroy');
 });

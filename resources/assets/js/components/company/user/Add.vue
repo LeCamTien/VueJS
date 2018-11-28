@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="ibox-content">
-                <form method="post" v-on:submit="submitForm()" enctype="multipart/form-data" class="form-horizontal">
+                <form autocomplete="off" method="post" v-on:submit="submitForm()" class="form-horizontal">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Username</label>
                         <div class="col-sm-10">

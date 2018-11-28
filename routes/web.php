@@ -50,3 +50,6 @@ Route::group(['namespace' => 'Company', 'middleware' => 'auth'], function() {
 });
 
 
+Route::get('/test/{id}', [
+	'uses' => 'Company\WorkflowController@show'
+]);

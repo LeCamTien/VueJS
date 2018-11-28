@@ -13,6 +13,10 @@ import RoleEdit from '../components/company/role/Edit.vue'
 import User from '../components/company/user/Index.vue'
 import UserAdd from '../components/company/user/Add.vue'
 import UserEdit from '../components/company/user/Edit.vue'
+import Workflow from '../components/company/workflow/Index.vue'
+import WorkflowAdd from '../components/company/workflow/Add.vue'
+import WorkflowEdit from '../components/company/workflow/Edit.vue'
+import WorkflowDetail from '../components/company/workflow/Detail.vue'
 
 Vue.use(Router)
 Vue.use(VeeValidate)
@@ -77,6 +81,26 @@ var routers = [
 		path: '/user-edit/:id',
 		name: 'userEdit',
 		component: UserEdit
+	},
+	{
+		path: '/workflow',
+		name: 'workflow',
+		component: Workflow
+	},
+	{
+		path: '/workflow-add',
+		name: 'workflowAdd',
+		component: WorkflowAdd
+	},
+	{
+		path: '/workflow-edit/:id',
+		name: 'workflowEdit',
+		component: WorkflowEdit
+	},
+	{
+		path: '/workflow-detail/:id',
+		name: 'workflowDetail',
+		component: WorkflowDetail
 	}
 	// {
 	// 	path: '*',
