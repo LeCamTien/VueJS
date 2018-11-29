@@ -85,7 +85,8 @@
                     if (result) {
                         axios.post('/api/roles/store',  newRole)
                         .then(response => {
-                            this.$router.replace('/role')
+                            // this.bus.$emit('message', true)
+                            this.$router.push('/role')
                         })
                         .catch(error => {
                             console.log(error);

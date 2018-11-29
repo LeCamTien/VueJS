@@ -35,7 +35,6 @@
 		                            <i class="fa fa-times"></i>
 		                        </a>
 		                    </div>
-		                    <h4 v-if="message != ''" style="color: red">test</h4>
 		                </div>
 		                <div class="ibox-content">
 		                    <div class="table-responsive">
@@ -84,7 +83,7 @@
 		data: function() {
 			return {
 				workflows:[],
-				message: ''
+				message: '',
 			}
 		},
 		mounted() {
@@ -96,7 +95,6 @@
 				console.log(error);
 				alert("Could not load workflows data!")
 			});
-
 		},
 		methods: {
 			deleteItem(workflow_id, index) {

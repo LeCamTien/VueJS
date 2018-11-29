@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import VeeValidate from 'vee-validate'
+import VuexFlash from 'vuex-flash';
 import Login from '../components/auth/Login.vue'
 import Register from '../components/auth/Register.vue'
 import Home from '../components/company/Home.vue'
@@ -17,6 +18,8 @@ import Workflow from '../components/company/workflow/Index.vue'
 import WorkflowAdd from '../components/company/workflow/Add.vue'
 import WorkflowEdit from '../components/company/workflow/Edit.vue'
 import WorkflowDetail from '../components/company/workflow/Detail.vue'
+
+Vue.use(VuexFlash, { mixin: true });
 
 Vue.use(Router)
 Vue.use(VeeValidate)
@@ -118,6 +121,6 @@ router.beforeEach((to, from, next) => {
 	next();
 });
 
-router.push('/');
+// router.push('/');
 
 export default router;

@@ -106,7 +106,9 @@
 					if (result) {
 						axios.post('/api/workflows/store', newWorkflow)
 						.then(response => {
-							this.$router.replace('/workflow')
+							//this.flash({message:'ssa'})
+							this.$root.$emit('success', true)
+							this.$router.push('/workflow')
 						})
 						.catch(error => {
 							console.log(error);

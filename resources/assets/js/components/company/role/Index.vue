@@ -36,6 +36,7 @@
 	                            <i class="fa fa-times"></i>
 	                        </a>
 	                    </div>
+	                    <h4 style="color: red">{{ message }}</h4>
 	                </div>
 	                <div class="ibox-content">
 	                    <div class="table-responsive">
@@ -78,19 +79,20 @@
 	export default {
 		data: function () {
             return {
-                roles: []
+                roles: [],
+                message: ''
             }
         },
         mounted() {
-            
             axios.get('/api/roles/index')
-                .then(response => {
-                    this.roles = response.data.roles
-                })
-                .catch(error => {
-                    console.log(error);
-                    alert("Could not load role");
-                });
+            .then(response => {
+                this.roles = response.data.roles
+            })
+            .catch(error => {
+                console.log(error);
+                alert("Could not load role");
+            });
+            console.log(this.message)
         },
         methods: {
             deleteItem(role_id, index) {
