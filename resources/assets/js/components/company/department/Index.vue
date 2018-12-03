@@ -36,6 +36,7 @@
 	                            <i class="fa fa-times"></i>
 	                        </a>
 	                    </div>
+	                    <h4 style="color: red">{{ message }}</h4>
 	                </div>
 	                <div class="ibox-content">
 	                    <div class="table-responsive">
@@ -76,7 +77,8 @@
 	export default {
 		data: function () {
             return {
-                departments: []
+                departments: [],
+                message: ''
             }
         },
         mounted() {
@@ -89,6 +91,9 @@
                     console.log(error);
                     alert("Could not load user");
                 });
+            this.$events.$on('message-event', response => {
+            	this.message = response;
+            })   
         },
         methods: {
             deleteItem(department_id, index) {
@@ -96,6 +101,7 @@
                     
                     axios.delete('/api/departments/delete/' + department_id)
                         .then(response => {
+                        	this.$events.$emit('message-event', response.data.message);
                             this.departments.splice(index,1)
                         })
                         .catch(error => {

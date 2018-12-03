@@ -72,7 +72,8 @@
                     name: '',
                     description: '',
                     active: '',
-                }
+                },
+                message: ''
             }
         },
         methods: {
@@ -84,6 +85,10 @@
 
                 axios.put('/api/departments/update/' + this.department_id, newDepartment)
                     .then(response => {
+                        this.message = response.data.message;
+                        setTimeout(() => {
+                            this.$events.$emit('message-event', this.message);
+                        }, 1000)
                         this.$router.replace('/department');
                     })
                     .catch(error => {

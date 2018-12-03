@@ -35,6 +35,7 @@
 		                            <i class="fa fa-times"></i>
 		                        </a>
 		                    </div>
+		                    <h4 style="color: red">{{ message }}</h4>
 		                </div>
 		                <div class="ibox-content">
 		                    <div class="table-responsive">
@@ -75,7 +76,8 @@
 	export default {
 		data: function() {
 			return {
-				users: []
+				users: [],
+				message: ''
 			}
 		},
 		mounted() {
@@ -87,12 +89,21 @@
 				console.log(error)
 				alert("Could not get User!")
 			});
+
+			if (this.$route.query.message) {
+				this.message = this.$route.query.message;
+			}
+
+			this.$events.$on('message-event', response => {
+				this.message = response;
+			})
 		},
 		methods: {
 			deleteItem(user_id, index) {
 				if (confirm("Do you really want to delete it?")) {
 					axios.delete('/api/users/delete/' + user_id)
 					.then(response => {
+						this.$events.$emit('message-event', response.data.message)
 						this.users.splice(index,1)
 					})
 					.catch(error => {

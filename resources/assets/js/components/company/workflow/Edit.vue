@@ -87,7 +87,8 @@
 					description: '',
 					diagram: '',
 					explanation: ''
-				}
+				},
+				message: ''
 			}
 		},
 		methods: {
@@ -105,6 +106,10 @@
 
 				axios.post('/api/workflows/update/' + this.workflow_id, newWorkflow)
 				.then(response => {
+					this.message = response.data.message;
+                    setTimeout(() => {
+                        this.$events.$emit('message-event', this.message);
+                    }, 1000)
 					this.$router.replace('/workflow');
 				})
 				.catch(error => {

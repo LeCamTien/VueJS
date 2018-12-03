@@ -36,7 +36,7 @@
 	                            <i class="fa fa-times"></i>
 	                        </a>
 	                    </div>
-	                    <h4 style="color: red">{{ message }}</h4>
+	                    <h4 style="color: red">{{ messageSuc }}</h4>
 	                </div>
 	                <div class="ibox-content">
 	                    <div class="table-responsive">
@@ -84,7 +84,7 @@
             }
         },
         mounted() {
-            axios.get('/api/roles/index')
+        	axios.get('/api/roles/index')
             .then(response => {
                 this.roles = response.data.roles
             })
@@ -92,7 +92,15 @@
                 console.log(error);
                 alert("Could not load role");
             });
-            console.log(this.message)
+
+            // if(this.$route.query.message){
+            // 	this.message = this.$route.query.message
+            // }
+
+            this.$events.$on('message-event', message => {
+        		this.message = message
+        	});
+
         },
         methods: {
             deleteItem(role_id, index) {
@@ -100,6 +108,7 @@
                     
                     axios.delete('/api/roles/delete/' + role_id)
                         .then(response => {
+                            this.$events.$emit('message-event', response.data.message);
                             this.roles.splice(index, 1)
                         })
                         .catch(error => {
@@ -108,6 +117,12 @@
                         });
                 }
             }
+        },
+
+        computed:{
+        	messageSuc(){
+        		return this.message
+        	}
         }
 	}
 </script>

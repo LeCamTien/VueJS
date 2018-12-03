@@ -52,7 +52,7 @@
                         <div class="col-sm-10">
                             <select name="role_id" v-model="user.role_id" class="form-group">
                                 <option value="1">Admin</option>
-                                <option value="2" selected="selected">User</option>
+                                <option value="2">User</option>
                             </select>
                             <h4 style="color: red"><span v-show="errors.has('role_id')">{{ errors.first('role_id') }}</span></h4>
                         </div>
@@ -80,7 +80,8 @@
                     password: '',
                     email: '',
                     role_id: ''
-                }
+                },
+                message: ''
             }
         },
         methods: {
@@ -93,7 +94,13 @@
                     if (result) {
                         axios.post('/api/users/store', newUser)
                         .then(response => {
-                            this.$router.replace('/user')
+                            this.message = response.data.message
+                            this.$router.push({
+                                path: '/user',
+                                query: {
+                                    message: this.message
+                                }
+                            })
                         })
                         .catch(error => {
                             console.log(error)

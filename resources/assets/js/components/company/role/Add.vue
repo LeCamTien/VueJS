@@ -73,7 +73,8 @@
 					name: '',
 					description: '',
 					active: ''
-				}
+				},
+                message: ''
 			}
 		},
 		methods: {
@@ -85,8 +86,17 @@
                     if (result) {
                         axios.post('/api/roles/store',  newRole)
                         .then(response => {
-                            // this.bus.$emit('message', true)
-                            this.$router.push('/role')
+                            this.message = response.data.message;
+                            setTimeout(() => {
+                                this.$events.$emit('message-event', this.message);
+                            }, 1000)
+                            this.$router.replace('/role');
+                            // this.$router.push({
+                            //     path: '/role',
+                            //     query: {
+                            //         message: this.message
+                            //     }
+                            // })
                         })
                         .catch(error => {
                             console.log(error);

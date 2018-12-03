@@ -2,13 +2,17 @@
 <div class="content">
 	<div class="row wrapper border-bottom white-bg page-heading">
 		<div class="col-lg-10">
-			<h2>E-commerce product detail</h2>
+			<h2>Workflow detail</h2>
 			<ol class="breadcrumb">
 				<li>
-					<a href="index.html">Home</a>
+					<router-link :to="{name:'home'}">
+						<a href="index.html">Home</a>
+					</router-link>
 				</li>
 				<li>
-					<a>E-commerce</a>
+					<router-link :to="{name:'workflow'}">
+						<a>Workflow</a>
+					</router-link>
 				</li>
 				<li class="active">
 					<strong>Product detail</strong>

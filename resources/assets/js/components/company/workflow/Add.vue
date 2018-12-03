@@ -43,7 +43,7 @@
 	                    <div class="form-group">
 	                        <label class="col-sm-2 control-label">Diagram</label>
 	                        <div class="col-sm-10">
-	                        	<input type="file" name="diagram" @change="processFile($event)" v-validate="'required'">
+	                        	<input type="file" name="diagram" @change="processFile($event)" v-validate="'required'" lang="en">
 	                            <h4 style="color: red"><span v-show="errors.has('diagram')">{{ errors.first('diagram') }}</span></h4>
 	                        </div>
 	                    </div>
@@ -78,7 +78,8 @@
 					description: '',
 					diagram: '',
 					explanation: ''
-				}
+				},
+				message: ''
 			}
 		},
 		methods: {
@@ -106,8 +107,10 @@
 					if (result) {
 						axios.post('/api/workflows/store', newWorkflow)
 						.then(response => {
-							//this.flash({message:'ssa'})
-							this.$root.$emit('success', true)
+							this.message = response.data.message;
+							setTimeout(() => {
+								this.$events.$emit('message-event', this.message)
+							}, 1000);
 							this.$router.push('/workflow')
 						})
 						.catch(error => {

@@ -35,6 +35,7 @@
 		                            <i class="fa fa-times"></i>
 		                        </a>
 		                    </div>
+		                    <h4 style="color: red">{{ message }}</h4>
 		                </div>
 		                <div class="ibox-content">
 		                    <div class="table-responsive">
@@ -95,6 +96,10 @@
 				console.log(error);
 				alert("Could not load workflows data!")
 			});
+
+			this.$events.$on('message-event', response => {
+				this.message = response;
+			})
 		},
 		methods: {
 			deleteItem(workflow_id, index) {
@@ -102,6 +107,7 @@
 					
 					axios.delete('/api/workflows/delete/' + workflow_id)
 					.then(response => {
+						this.$events.$emit('message-event', response.data.message)
 						this.workflows.splice(index, 1);
 					})
 					.catch(error => {
