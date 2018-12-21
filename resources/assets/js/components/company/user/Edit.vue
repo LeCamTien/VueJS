@@ -71,7 +71,8 @@
                     username: '',
                     email: '',
                     role_id: ''
-                }
+                },
+                message: ''
             }
         },
         methods: {
@@ -81,7 +82,13 @@
                 var newUser = this.user
                 axios.put('/api/users/update/' + this.user_id, newUser)
                 .then(response => {
-                    this.$router.replace('/user')
+                    this.message = response.data.message
+                    this.$router.push({
+                        path: '/user',
+                        query: {
+                            message: this.message
+                        }
+                    })
                 })
                 .catch(error => {
                     console.log(error)

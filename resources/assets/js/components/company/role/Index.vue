@@ -36,6 +36,7 @@
 	                            <i class="fa fa-times"></i>
 	                        </a>
 	                    </div>
+	                    <h4 style="color: red">{{ messageSuc }}</h4>
 	                </div>
 	                <div class="ibox-content">
 	                    <div class="table-responsive">
@@ -46,7 +47,7 @@
 	                                    <th>Name</th>
 	                                    <th>Description</th>
 	                                    <th>Active</th>
-	                                    <th>Function</th>
+	                                    <th width="180px">Function</th>
 	                                </tr>
 	                            </thead>
 	                            <tbody>
@@ -57,8 +58,8 @@
 	                                    <td>{{ role.description }}</td>
 	                                    <td>{{ role.active }}</td>
 	                                    <td>
-	                                    	<router-link :to="{name:'roleEdit', params: {id: role.role_id}}"><a href="" title="" class="btn btn-primary"><i class="fa fa-edit"></i> Sửa</a></router-link>
-                                            <a href="#" title="" v-on:click="deleteItem(role.role_id, index)" class="btn btn-danger"><i class="fa fa-pencil"></i> Xóa</a>
+	                                    	<router-link :to="{name:'roleEdit', params: {id: role.role_id}}"><a href="" title="" class="btn btn-primary"><i class="fa fa-edit"></i> Edit</a></router-link>
+                                            <a href="#" title="" v-on:click="deleteItem(role.role_id, index)" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
 	                                    </td>
 	                                </tr>
 	                                
@@ -78,19 +79,28 @@
 	export default {
 		data: function () {
             return {
-                roles: []
+                roles: [],
+                message: ''
             }
         },
         mounted() {
-            
-            axios.get('/api/roles/index')
-                .then(response => {
-                    this.roles = response.data.roles
-                })
-                .catch(error => {
-                    console.log(error);
-                    alert("Could not load role");
-                });
+        	axios.get('/api/roles/index')
+            .then(response => {
+                this.roles = response.data.roles
+            })
+            .catch(error => {
+                console.log(error);
+                alert("Could not load role");
+            });
+
+            // if(this.$route.query.message){
+            // 	this.message = this.$route.query.message
+            // }
+
+            this.$events.$on('message-event', message => {
+        		this.message = message
+        	});
+
         },
         methods: {
             deleteItem(role_id, index) {
@@ -98,6 +108,7 @@
                     
                     axios.delete('/api/roles/delete/' + role_id)
                         .then(response => {
+                            this.$events.$emit('message-event', response.data.message);
                             this.roles.splice(index, 1)
                         })
                         .catch(error => {
@@ -106,6 +117,12 @@
                         });
                 }
             }
+        },
+
+        computed:{
+        	messageSuc(){
+        		return this.message
+        	}
         }
 	}
 </script>

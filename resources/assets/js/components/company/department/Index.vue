@@ -36,6 +36,7 @@
 	                            <i class="fa fa-times"></i>
 	                        </a>
 	                    </div>
+	                    <h4 style="color: red">{{ message }}</h4>
 	                </div>
 	                <div class="ibox-content">
 	                    <div class="table-responsive">
@@ -46,22 +47,20 @@
 	                                    <th>Name</th>
 	                                    <th>Description</th>
 	                                    <th>Active</th>
-	                                    <th>Function</th>
+	                                    <th width="180px">Function</th>
 	                                </tr>
 	                            </thead>
 	                            <tbody>
-	                                
 	                                <tr v-for="department, index in departments" >
 	                                    <th>{{ department.department_id }}</th>
 	                                    <td>{{ department.name }}</td>
 	                                    <td>{{ department.description }}</td>
 	                                    <td>{{ department.active }}</td>
 	                                    <td>
-	                                    	<router-link :to="{name:'departmentEdit', params: {id:department.department_id}}"><a href="" title="" class="btn btn-primary"><i class="fa fa-edit"></i> Sửa</a></router-link>
-                                            <a href="#" title="" v-on:click="deleteItem(department.department_id, index)" class="btn btn-danger"><i class="fa fa-pencil"></i> Xóa</a>
+	                                    	<router-link :to="{name:'departmentEdit', params: {id:department.department_id}}"><a href="" title="" class="btn btn-primary"><i class="fa fa-edit"></i> Edit</a></router-link>
+                                            <a href="#" title="" v-on:click="deleteItem(department.department_id, index)" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
 	                                    </td>
 	                                </tr>
-	                                
 	                            </tbody>
 	                        </table>
 	                    </div>
@@ -78,7 +77,8 @@
 	export default {
 		data: function () {
             return {
-                departments: []
+                departments: [],
+                message: ''
             }
         },
         mounted() {
@@ -91,6 +91,9 @@
                     console.log(error);
                     alert("Could not load user");
                 });
+            this.$events.$on('message-event', response => {
+            	this.message = response;
+            })   
         },
         methods: {
             deleteItem(department_id, index) {
@@ -98,6 +101,7 @@
                     
                     axios.delete('/api/departments/delete/' + department_id)
                         .then(response => {
+                        	this.$events.$emit('message-event', response.data.message);
                             this.departments.splice(index,1)
                         })
                         .catch(error => {

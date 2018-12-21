@@ -19,6 +19,7 @@ h1 {
 }
 h2 {
   font-size: 24px;
+  font-weight: bold;
 }
 h3 {
   font-size: 16px;
@@ -3565,7 +3566,7 @@ body.body-small .footer.fixed {
 .table > tfoot > tr > td {
   border-top: 1px solid #e7eaec;
   line-height: 1.42857;
-  padding: 8px;
+  padding: 12px;
   vertical-align: top;
 }
 /* PANELS */
